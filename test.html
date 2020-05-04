@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <script src="sanpham.js"></script>
+</head>
+
+<body>
+    <script>
+        var iPhone5s = taoRaDoiTuongSP("https://didongviet.vn/pub/media/catalog/product//a/p/apple-iphone-5s-vang-didongviet_.png", "Iphone 5s", 2800000, 25, "Hà Nội");
+        var iPhone6s = taoRaDoiTuongSP("https://didongviet.vn/pub/media/catalog/product//a/p/apple-iphone-5s-vang-didongviet_.png", "Iphone 5s", 2800000, 25, "Hà Nội");
+        var json = iPhone5s.toJson();
+        var json1 = iPhone6s.toJson();
+        localStorage.setItem("sanPham", json);
+        localStorage.setItem("sanPham", json1);
+        var jsonSP = localStorage.getItem("sanPham");
+        var dienThoai = JSON.parse(jsonSP);
+        console.log(dienThoai);
+        var json = localStorage.getItem("sanPham");
+        var dienThoai = taoRaDoiTuongSP().fromJson(json);
+        console.log(dienThoai.tinhGiaBan());
+    </script>
+</body>
+
+</html>

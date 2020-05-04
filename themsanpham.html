@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm sản phẩm</title>
+    <script src="util.js"></script>
+    <script src="sanpham.js"></script>
+    <script src="validation.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        #them-san-pham {
+            width: 500px;
+            margin: auto;
+            margin-top: 50px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            /* box-shadow: Ngang: 2px, Dọc: 2px, Viền mờ: 5px */
+            box-shadow: 2px 2px 5px #ddd;
+        }
+
+        #them-san-pham label,
+        input {
+            width: 100%;
+            display: block;
+        }
+
+        #them-san-pham label {
+            margin-top: 20px;
+        }
+
+        #them-san-pham input {
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        #them-san-pham button {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px 20px;
+            width: 100%;
+            color: #fff;
+            margin-top: 20px;
+            background-color: #F7442E;
+        }
+
+        #them-san-pham button:hover {
+            background-color: #c53624;
+        }
+
+        .error {
+            font-size: 15px;
+            font-style: italic;
+            color: #c53624;
+            padding: 10px 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="them-san-pham">
+        <label for="hinhAnh">Hình ảnh</label>
+        <input name="* Url ảnh" notnull type="text" id="hinhAnh" oninput="onInputChange()">
+        <div class="error"></div>
+
+        <label for="ten">Tên sản phẩm</label>
+        <input name="* Tên sản phẩm" notnull type="text" id="ten" oninput="onInputChange()">
+        <div class="error"></div>
+
+        <label for="giaGoc">Giá gốc</label>
+        <input name="* Giá gốc" notnull lonhon0 type="number" id="giaGoc" oninput="onInputChange()">
+        <div class="error"></div>
+
+        <label for="phanTramGiamGia">Phần trăm giảm giá</label>
+        <input name="* Phần trăm giảm giá" type="number" notnull lonhon0 id="phanTramGiamGia" oninput="onInputChange()">
+        <div class=" error"></div>
+
+        <label for="khuVuc">Khu vực</label>
+        <input name="* Khu vực" notnull type="text" id="khuVuc" oninput="onInputChange()">
+        <div class=" error"></div>
+        <button onclick="onClickThemSP()" class="but">Thêm mới sản phẩm</button>
+    </div>
+    <script>
+        // B1: Tạo hàm onClick
+        function onClickThemSP() {
+
+            if (!InputHopLe(event.target.parentElement))
+                return;
+
+
+
+            // B2: Truy cập toàn bộ node input để get dữ liệu
+            var nodeHinhAnh = document.getElementById("hinhAnh");
+            var hinhAnh = nodeHinhAnh.value;
+            console.log(hinhAnh);
+            var nodeTen = document.getElementById("ten");
+            var ten = nodeTen.value;
+            console.log(ten);
+            var nodeGiaGoc = document.getElementById("giaGoc");
+            var giaGoc = nodeGiaGoc.value;
+            console.log(giaGoc);
+            var nodePhanTram = document.getElementById("phanTramGiamGia");
+            var phanTramGiamGia = nodePhanTram.value;
+            console.log(phanTramGiamGia);
+            var nodeKhuVuc = document.getElementById("khuVuc");
+            var khuVuc = nodeKhuVuc.value;
+            console.log(khuVuc);
+            // B3: Tạo ra đối tượng từ input 
+            var sanPham = taoRaDoiTuongSP(hinhAnh, ten, giaGoc, phanTramGiamGia, khuVuc);
+            console.log(sanPham);
+            console.log(sanPham.tinhGiaBan());
+            console.log(sanPham.ten);
+            // B4: Lấy danh sách từ Local Storage lên
+            var jsonSP = localStorage.getItem("danhSachSanPham");
+            var dsSP = JSON.parse(jsonSP);
+            if (dsSP == null) {
+                dsSP = new Array();
+            }
+            console.log(dsSP);
+            // B5: Thêm sản phẩm người dùng nhập vào trong danh sách cũ
+            dsSP.push(sanPham);
+            // B6: Cập nhật lại danh sách từ Local Storage
+            var jsonSP = JSON.stringify(dsSP);
+            localStorage.setItem("danhSachSanPham", jsonSP);
+            alert("Thêm thành công");
+        }
+    </script>
+</body>
+
+</html>

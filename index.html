@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuyển đối tượng thành giao diện</title>
+   
+    <script src="util.js"></script>
+    <script src="sanpham.js"></script>
+    <script src="giohang.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        .san-pham {
+            width: calc(25% - 40px);
+            border: 1px solid gray;
+            padding: 20px;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 10px 20px;
+            cursor: pointer;
+        }
+        .ten-san-pham {
+            font-size: 20px;
+            line-height: 30px;
+        }
+
+        .gia-goc {
+            font-size: 14px;
+            color: black;
+            text-decoration: line-through;
+        }
+
+        .gia-ban {
+            font-size: 18px;
+            ;
+            color: red;
+            font-weight: 600;
+        }
+
+        .khu-vuc {
+            font-size: 14px;
+            color: #666;
+            text-align: right;
+        }
+
+        .btn-them {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px 20px;
+            width: 100%;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        #hien-thi-san-pham{
+            width: 1200px;
+            height: 2200px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Nav: Hiển thị menu -->
+    <nav class="nav-bar">
+
+    </nav>
+    <!-- Main: Hiển thị nội dung chính -->
+    <main id="hien-thi-san-pham">
+        <!-- Hiện thị slider -->
+        <section class="slider">
+
+        </section>
+        <!-- Hiển thị danh sách sản phẩm -->
+    </main>
+    <footer>
+
+    </footer>
+    <!-- B1: Tạo ra đối tượng -->
+    <!-- B2: Chuyển đối tượng thành 1 đoạn HTML -->
+    <!-- B3: Gắn đoạn HTML vào 1 Node trên giao giện -->
+    <script>
+        // var sanPhamIphone5s = taoRaDoiTuongSP("https://didongviet.vn/pub/media/catalog/product//a/p/apple-iphone-5s-vang-didongviet_.png", "Iphone 5s", 2800000, 25, "Hà Nội")
+        // var sanPhamIphone6s = taoRaDoiTuongSP("https://www.phonebot.com.au/image/cache/catalog/refurbished/apple/iphone-6s/iphone-6s-rose-gold1-650x650.jpeg", "Iphone 6s", 3200000, 20, "Hà Nội")
+        // var sanPhamIphone7s = taoRaDoiTuongSP("https://assets.swappie.com/iPhone7Plus32GBRoseGold-1-1-600x600.jpg", "Iphone 7s", 5500000, 15, "Hà Nội");
+        // var sanPhamIphone8 = taoRaDoiTuongSP("https://cdn.tgdd.vn/Products/Images/42/114113/iphone-8-64gb-hh-600x600.jpg", "Iphone 8", 9500000, 15, "Hà Nội");
+        /* 
+        Để xuất 100 sản phẩm giống nhau
+        for(var i=0;i<=100;i++){
+            dsSanPham.push(sanPhamIphone);
+        }
+        */
+        // * Truy xuất bằng Local Storage
+        var jsonSP = localStorage.getItem("danhSachSanPham");
+        var dsSanPham = taoRaDoiTuongSP().fromJsons(jsonSP);
+
+        if (dsSanPham == null) {
+            dsSanPham = new Array();
+        }
+        // * Truy xuất thủ công 
+        // var dsSanPham = new Array();
+        // for (var i = 0; i <= 4; i++) {
+        //     dsSanPham.push(sanPhamIphone5s);
+        //     dsSanPham.push(sanPhamIphone6s);
+        //     dsSanPham.push(sanPhamIphone7s);
+        //     dsSanPham.push(sanPhamIphone8)
+        // }
+        var swap = chuyenDanhSach(dsSanPham);
+        var nodeHienThi = document.getElementById("hien-thi-san-pham");
+        nodeHienThi.innerHTML = swap;
+
+        function onClickThemVaoGioHang(idSanPham) {
+            alert("Thêm thành công vào giỏ hàng!");
+            /* console.log(getSanPhamTuID(idSanPham));
+             let gioSP = new Object();
+             gioSP.id = idSanPham;
+             gioSP.soluong = 1;
+             let coTrongGio = false;
+             // Lấy danh sách giỏ hàng từ local
+             let danhSachGioHang = JSON.parse(localStorage.getItem("boxGio"));
+             if (danhSachGioHang == null) {
+                 danhSachGioHang = new Array();
+             }
+             // Tăng số lượng khi đã có trong giỏ
+             for (var i = 0; i < danhSachGioHang.length; i++) {
+                 if (danhSachGioHang[i].id == idSanPham) {
+                     danhSachGioHang[i].soluong++;
+                     coTrongGio = true;
+                 }
+             }
+             // Nếu chưa có trong giỏ thì thêm vào giỏ
+             if (!coTrongGio) {
+                 danhSachGioHang.push(gioSP);
+             }
+             // Lưu vào Local Storage
+             localStorage.setItem("boxGio", JSON.stringify(danhSachGioHang));*/
+
+            let dsItems = layDanhSachGioHang();
+            let checkTonTai = false;
+
+            for (var i = 0; i < dsItems.length; i++) {
+
+                var items = dsItems[i];
+                if (items.idSanPham == idSanPham) {
+                    dsItems[i].soLuong++;
+                    checkTonTai = true;
+                }
+            }
+
+            if (!checkTonTai) 
+               dsItems.push(taoDoiTuongItems(idSanPham, 1));
+            
+
+               luuVaoLocal('dsGioHang',dsItems);
+        }
+    </script>
+    <!-- Giau ID     
+        let buttongiohang = document.createElement('div');
+    buttongiohang.addEventListener('click',clickGioHang(sanPham.id)); -->
+</body>
+
+</html>

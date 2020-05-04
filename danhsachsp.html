@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo ra danh sách sản phẩm</title>
+    <script src="util.js"></script>
+    <script src="sanpham.js"></script>
+</head>
+
+<body>
+    <script>
+        // (*1) Lưu trữ danh sách sản phẩm xuống Local Storage theo key danhSachSanPham
+        // B1: Tạo danh sách sản phẩm
+        var dsSP = new Array();
+        var iPhone5s = taoRaDoiTuongSP("https://didongviet.vn/pub/media/catalog/product//a/p/apple-iphone-5s-vang-didongviet_.png", "Iphone 5s", 2800000, 25, "Hà Nội");
+        var iPhone6s = taoRaDoiTuongSP("https://www.phonebot.com.au/image/cache/catalog/refurbished/apple/iphone-6s/iphone-6s-rose-gold1-650x650.jpeg", "Iphone 6s", 3200000, 20, "Hà Nội");
+        var iPhone7s = taoRaDoiTuongSP("https://assets.swappie.com/iPhone7Plus32GBRoseGold-1-1-600x600.jpg", "Iphone 7s", 5500000, 15, "Hà Nội");
+        var iPhone8 = taoRaDoiTuongSP("https://cdn.tgdd.vn/Products/Images/42/114113/iphone-8-64gb-hh-600x600.jpg", "Iphone 8", 9500000, 15, "Hà Nội");
+        // B2: Chuyển danh sách sản phẩm sang json
+        for (var i = 0; i < 5; i++) {
+            dsSP.push(iPhone5s);
+            dsSP.push(iPhone6s);
+            dsSP.push(iPhone7s);
+            dsSP.push(iPhone8)
+        }
+        var json = JSON.stringify(dsSP);
+        console.log(json);
+        // B3: Lưu trữ json xuống Local Storage
+        localStorage.setItem("danhSachSanPham", json);
+        // (*2) LOAD DANH SÁCH ĐỐI TƯỢNG TỪ LOCAL STORAGE LÊN
+        var jsonSP = localStorage.getItem("danhSachSanPham");
+        var getSP = JSON.parse(jsonSP);
+        console.log(getSP);
+        // (*3) Load data từ Local Storage
+    </script>
+</body>
+
+</html>
