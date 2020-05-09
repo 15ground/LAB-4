@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng</title>
+    <script src="https://kit.fontawesome.com/66ee92a2d5.js" crossorigin="anonymous"></script>
+    <script src="js/util.js"></script>
+    <script src="js/sanpham.js"></script>
+    <script src="js/giohang.js"></script>
+</head>
+<style>
+    * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    .container {
+        border: 1px solid #ddd;
+        box-shadow: 2px 2px 4px #ddd;
+        margin: 0 auto;
+        max-width: 1100px;
+        padding: 20px;
+    }
+
+    .list-items {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .list-items .pics {
+        width: 60px;
+        height: 60px;
+    }
+
+    .list-items span:first-child {
+        text-decoration: line-through;
+        font-size: 12px;
+    }
+    .soLuong{
+        width: 50px;
+        height: 30px;
+        text-align: center;
+    }
+</style>
+
+<body>
+    <!-- B1. Xây dựng layout: HTML + CSS -->
+    <div class="container" id="container">
+        <!-- <div class="list-items">
+            <div class="pics">
+                <img src="https://media3.scdn.vn/img3/2019/11_7/t0VZHh_simg_de2fe0_500x500_maxb.jpg">
+            </div>
+            <div class="name">
+                ChocoPie Dark
+            </div>
+            <div class="cost">
+                <span class="cost-ori">
+                    5000000 đ
+                </span>
+                <span class="cost-sell">
+                    4000000 đ
+                </span>
+            </div>
+            <input type="number" class="soLuong" value="1">
+            <p class="total-cost">4000000 đ</p>
+            <div class="actions">
+                <i class="far fa-trash-alt"></i>
+            </div>
+        </div> -->
+    </div>
+    <!-- B2. Giả lập hàm js để chuyển đổi 1 đối tượng giỏ hàng thành HTML - HARDCODE của B1 -->
+    <script>
+        showCart();
+        function chuyenDoiTuongThanhHTML(itemsGioHang) {
+            var sanPham = getSanPhamTuID(itemsGioHang.id);
+            console.log(sanPham);
+            var s=sanPham.tinhGiaBan()*itemsGioHang.soLuong;
+            var html = '   <div class="list-items">  ' +
+                '               <div class="pics">  ' +
+                '                   <img src="'+sanPham.hinhAnh+'">  ' +
+                '               </div>  ' +
+                '               <div class="name">  ' +
+                '                   '+sanPham.ten+'  ' +
+                '               </div>  ' +
+                '               <div class="cost">  ' +
+                '                   <span class="cost-ori">  ' +
+                '                       '+sanPham.giaGoc+'  ' +
+                '                   </span>  ' +
+                '                   <span class="cost-sell">  ' +
+                '                       '+sanPham.tinhGiaBan()+'  ' +
+                '                   </span>  ' +
+                '               </div>  ' +
+                '               <input type="number" class="soLuong" value="'+itemsGioHang.soLuong+'">  ' +
+                '               <p class="total-cost">'+s+' đ</p>  ' +
+                '               <div class="actions">  ' +
+                '                   <i class="far fa-trash-alt"></i>  ' +
+                '               </div>  ' +
+                '          </div>  ';
+                console.log(itemsGioHang.soLuong);
+            return html;
+        }
+        // B3. Viết hàm chuyển đổi 1 danh sách đối tượng thành HTML
+        function chuyenDanhSachThanhHTML(dsItems) {
+            var htmlTong = '';
+            for (var i = 0; i < dsItems.length; i++) {
+                var html = chuyenDoiTuongThanhHTML(dsItems[i]);
+                htmlTong += html;
+            }
+            return htmlTong;
+        }
+        function showCart() {
+            //  B4. Truy cập node cần hiển thị danh sách
+            // B4.1 Load danh sách giỏ hàng từ LOCAL STORAGE lên
+            var dsItems = layDanhSachGioHang();
+            // B4.2 Chuyển ds Items giỏ hàng sang HTML
+            var html = chuyenDanhSachThanhHTML(dsItems);
+            // B4.3 Truy cập node container để in HTML ds items giỏ hàng
+            var nodeGioHang = document.getElementById("container");
+            nodeGioHang.innerHTML = html;
+
+        }
+    </script>
+
+
+    <!-- B5. Xử lý hàm chuyển đối tượng thành HTML -->
+
+</body>
+
+</html>
